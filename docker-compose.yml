@@ -1,0 +1,39 @@
+services:
+  kanban-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: kanban-worker
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+    networks:
+      - kanban-shared-services
+
+  kanban-server-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: kanban-worker-dev
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - kanban_server_node_modules:/app/node_modules
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+    networks:
+      - kanban-shared-services
+
+volumes:
+  kanban_server_node_modules:
+
+networks:
+  kanban-shared-services:
+    external: true
