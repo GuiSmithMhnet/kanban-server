@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: production
-    container_name: kanban-worker
+    container_name: kanban-server
     restart: unless-stopped
     env_file:
       - .env
@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: development
-    container_name: kanban-worker-dev
+    container_name: kanban-server-dev
     restart: unless-stopped
     working_dir: /app
     volumes:
